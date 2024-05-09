@@ -3,15 +3,18 @@ import styled from 'styled-components';
 import logoHeader from '/assets/images/logo/LogoHeader.png';
 
 const StyledHeader = styled.header`
-  background-color: #FFFFFF;
-  width: 100%;
-  padding: 32px;
-  padding-top: 0px;
-  box-sizing: border-box;
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #E0E0E0;
+  justify-content: space-around;
+  width: 100%;
+  background-color: #fff;
+  padding: 32px 0;
+  border-bottom: 1px solid #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 `;
 
 const Header = () => {
