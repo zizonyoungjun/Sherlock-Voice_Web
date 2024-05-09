@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface CircleProps {
   score: number;
@@ -10,6 +11,8 @@ const Container = styled.div`
   width: 300px;
   margin: 50px auto;
   text-align: center;
+  margin-top: 180px;
+
 `;
 
 const ScoreText = styled.div`
@@ -122,6 +125,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
         <span>80</span>
         <span>100</span>
       </ScoreNumbers>
+      <Footer/>
     </Container>
   );
 };

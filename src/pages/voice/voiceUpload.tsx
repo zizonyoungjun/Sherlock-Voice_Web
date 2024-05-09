@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../../components/Header';
 import LogoDetective from '/assets/images/logo/LogoDetective.png';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅 임포트
+import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 interface UploadBoxProps {
   type: 'audio';
@@ -19,6 +20,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
 `;
 
 const MainContent = styled.div`
@@ -31,10 +33,13 @@ const MainContent = styled.div`
 const UploadBox = styled.div`
   background-color: #E1EFF6;
   color: #000;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 16px;
   padding-bottom: 36px;
   text-align: center;
+  max-width: 350px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 10px;
 `;
 
 const InfoText = styled.div`
@@ -47,7 +52,7 @@ const InfoText = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #002D4E; // 기본 색상
+  background-color: #002D4E;
   color: #fff;
   border: none;
   padding: 16px 32px;
@@ -89,7 +94,7 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
         <InfoText>의심되는 통화 녹음 파일을 업로드하여<br/>보이스 피싱 위험도와 대응법을<br/>간편히 확인해보세요 !</InfoText>
         <div>
           {type === 'audio' && (
-            <img src={LogoDetective} style={{ width: '400px', height: 'auto' }}/>
+            <img src={LogoDetective} style={{ width: '300px', height: 'auto' }}/>
           )}
           <input
             type="file"
@@ -120,6 +125,7 @@ const VoiceUpload = () => {
       <MainContent>
         <Upload type="audio" />
       </MainContent>
+      <Footer/>
     </PageContainer>
   );
 };
