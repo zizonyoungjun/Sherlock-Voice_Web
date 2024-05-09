@@ -12,7 +12,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
           <GlobalStyle />
           <Layout>
-            <Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
               <RouterProvider router={Router} />
             </Suspense>
           </Layout>
