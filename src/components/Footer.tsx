@@ -67,7 +67,7 @@ const Footer = () => {
                 <Link to="/survey">
                     <Icon src={quizIcon} alt="survey" />
                 </Link>
-                <IconLabel>점검 설문</IconLabel>
+                <IconLabel>설문 점검</IconLabel>
             </IconWrapper>
         </FooterContainer>
     );
