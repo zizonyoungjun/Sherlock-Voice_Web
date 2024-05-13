@@ -67,23 +67,39 @@ const Button = styled.button`
 
 const Upload: React.FC<UploadBoxProps> = ({ type }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [fileUploaded, setFileUploaded] = useState(false);
+  const [file, setFile] = useState<File | null>(null);  // 파일 객체를 저장할 상태
+  const [fileUploaded, setFileUploaded] = useState(false); // 파일 업로드 상태를 관리
   const navigate = useNavigate();
-
-  const handleButtonClick = () => {
-    if (fileUploaded) {
-      navigate('/Loading'); // 업로드가 완료된 상태에서 버튼을 클릭하면 로딩 페이지로 이동
-    } else {
-      fileInputRef.current?.click(); // 업로드가 완료되지 않았을 때 파일 선택창을 열어 사용자가 파일을 선택하게 함
-    }
-  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files[0]) {
-      const file = files[0];
-      console.log('Uploading:', file.name);
-      setFileUploaded(true); // 파일 업로드 상태를 true로 설정
+      setFile(files[0]); // 파일 객체 저장
+      setFileUploaded(true); // 파일이 선택되었다는 상태를 true로 설정
+      console.log('File selected:', files[0].name);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (fileUploaded && file) {
+      const formData = new FormData();
+      formData.append('file', file);  // 파일 객체를 FormData에 추가
+      
+      fetch('http://127.0.0.1:8000/upload/', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.task_id) {
+          navigate(`/loading/${data.task_id}`);
+        }
+      })
+      .catch(error => {
+        console.error('Upload error:', error);
+      });
+    } else {
+      fileInputRef.current?.click();  // 파일이 선택되지 않았다면 파일 선택창을 열도록 함
     }
   };
 
@@ -106,7 +122,7 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
           <Button 
             onClick={handleButtonClick}
             style={{
-              backgroundColor: fileUploaded ? '#28a745' : '#002D4E' // 조건에 따라 색상 변경
+              backgroundColor: fileUploaded ? '#28a745' : '#002D4E'
             }}
           >
             {fileUploaded ? '분석 시작하기' : '녹음 파일 올리기'}
