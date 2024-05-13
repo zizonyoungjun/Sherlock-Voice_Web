@@ -22,7 +22,7 @@ const Router = createBrowserRouter([
     element: <VoiceResult />,
   },
   {
-    path: "/loading",
+    path: "/loading/:taskId",    
     element: <Loading />,
   },
   {
