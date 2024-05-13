@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Lottie from 'lottie-react';
 import LoadingLottie from '/Users/youngjunhan/Desktop/24-1/종설/Sherlock_Voice/Sherlock_Voice-Web/public/assets/lottie/LoadingLottie.json';
-import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -34,28 +34,48 @@ const LoadingText = styled.div`
 `;
 
 const Loading = () => {
-    const navigate = useNavigate();
+  const { taskId } = useParams(); // URL 파라미터에서 task_id를 가져옵니다.
+  const navigate = useNavigate();
+  const [status, setStatus] = useState('processing'); // 초기 상태는 'processing'
 
-    // 서버 데이터 로딩 시뮬레이션 및 결과 페이지로 네비게이트
-    useEffect(() => {
-        // 여기에 서버 요청 로직을 추가하고, 완료되면 네비게이트 실행
-        const timer = setTimeout(() => {
-            navigate('/voiceResult');  // 데이터 로딩 후 결과 페이지로 이동
-        }, 3000);  // 3초 후에 네비게이트
+  useEffect(() => {
+      const checkStatus = async () => {
+          try {
+              const response = await fetch(`http://127.0.0.1:8000/loading/${taskId}`, {
+                  method: 'GET',
+                  headers: {
+                      'Accept': 'application/json'
+                  }
+              });
+              const data = await response.json();
+              if (data.status === 'ready') {
+                  navigate('/voiceResult'); // 작업이 완료되면 결과 페이지로 이동
+              } else {
+                  setTimeout(checkStatus, 2000); // 2초 후에 다시 상태 확인
+              }
+          } catch (error) {
+              console.error('Error checking status:', error);
+              setTimeout(checkStatus, 2000); // 오류 발생 시 2초 후에 다시 시도
+          }
+      };
 
-        return () => clearTimeout(timer);  // 컴포넌트 언마운트 시 타이머 제거
-    }, [navigate]);
+      checkStatus(); // 컴포넌트 마운트 시 작업 상태 확인 시작
 
-    return (
-        <Container>
-            <Header/>
-            <PageContainer>
-                <LoadingAnimation animationData={LoadingLottie} loop={true} />
-                <LoadingText>녹음 파일을 분석 중입니다.<br/>잠시만 기다려주세요...</LoadingText>
-            </PageContainer>
-            <Footer/>
-        </Container>
-    );
+      return () => {
+          // Cleanup function to prevent memory leaks or unwanted timeouts
+      };
+  }, [navigate, taskId]); // taskId가 변경될 때마다 효과를 다시 실행
+  
+  return (
+    <Container>
+        <Header/>
+        <PageContainer>
+            <LoadingAnimation animationData={LoadingLottie} loop={true} />
+            <LoadingText>녹음 파일을 분석 중입니다.<br/>잠시만 기다려주세요...</LoadingText>
+        </PageContainer>
+        <Footer/>
+    </Container>
+);
 };
 
 export default Loading;
