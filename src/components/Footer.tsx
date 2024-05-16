@@ -15,8 +15,7 @@ const FooterContainer = styled.footer`
   border-top: 1px solid #ccc;
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  max-width: 430px;
 `;
 
 const IconWrapper = styled.div`
@@ -55,7 +54,7 @@ const Footer = () => {
     return (
         <FooterContainer>
             <IconWrapper>
-                <Link to="/">
+                <Link to="/voiceUpload">
                     <Icon src={voiceIcon} alt="Voice" />
                 </Link>
                 <IconLabel>녹음 분석</IconLabel>
