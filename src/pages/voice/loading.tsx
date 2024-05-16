@@ -7,9 +7,14 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 const Container = styled.div`
-  width: 300px;
-  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
   text-align: center;
+  background-color: #fff;
 `;
 
 const PageContainer = styled.div`
@@ -17,8 +22,7 @@ const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 180px;
-  background-color: #fff; 
+  margin-top: 10px;
 `;
 
 const LoadingAnimation = styled(Lottie)`
@@ -39,43 +43,50 @@ const Loading = () => {
   const [status, setStatus] = useState('processing'); // 초기 상태는 'processing'
 
   useEffect(() => {
-      const checkStatus = async () => {
-          try {
-              const response = await fetch(`http://127.0.0.1:8000/loading/${taskId}`, {
-                  method: 'GET',
-                  headers: {
-                      'Accept': 'application/json'
-                  }
-              });
-              const data = await response.json();
-              if (data.status === 'ready') {
-                  navigate('/voiceResult'); // 작업이 완료되면 결과 페이지로 이동
-              } else {
-                  setTimeout(checkStatus, 2000); // 2초 후에 다시 상태 확인
-              }
-          } catch (error) {
-              console.error('Error checking status:', error);
-              setTimeout(checkStatus, 2000); // 오류 발생 시 2초 후에 다시 시도
+    let hasNavigated = false; // 페이지 이동 여부를 추적하기 위한 변수
+
+    const checkStatus = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/waiting/${taskId}/`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
           }
-      };
+        });
+        const data = await response.json();
+        if (data.status === 'ready') {
+          setTimeout(() => {
+            if (!hasNavigated) { // 아직 페이지 이동이 실행되지 않았다면
+              navigate(`/voiceResult/${taskId}`); // 작업이 완료되면 결과 페이지로 이동
+              hasNavigated = true;
+            }
+          }, 7000); // 최소 5초 후에 페이지 이동
+        } else {
+          setTimeout(checkStatus, 2000); // 2초 후에 다시 상태 확인
+        }
+      } catch (error) {
+        console.error('Error checking status:', error);
+        setTimeout(checkStatus, 2000); // 오류 발생 시 2초 후에 다시 시도
+      }
+    };
 
-      checkStatus(); // 컴포넌트 마운트 시 작업 상태 확인 시작
+    checkStatus(); // 컴포넌트 마운트 시 작업 상태 확인 시작
 
-      return () => {
-          // Cleanup function to prevent memory leaks or unwanted timeouts
-      };
+    return () => {
+      hasNavigated = true; // 컴포넌트가 언마운트되면 이동 플래그를 설정하여 불필요한 이동을 방지
+    };
   }, [navigate, taskId]); // taskId가 변경될 때마다 효과를 다시 실행
-  
+
   return (
     <Container>
-        <Header/>
-        <PageContainer>
-            <LoadingAnimation animationData={LoadingLottie} loop={true} />
-            <LoadingText>녹음 파일을 분석 중입니다.<br/>잠시만 기다려주세요...</LoadingText>
-        </PageContainer>
-        <Footer/>
+      <Header />
+      <PageContainer>
+        <LoadingAnimation animationData={LoadingLottie} loop={true} />
+        <LoadingText>녹음 파일을 분석 중입니다.<br />잠시만 기다려주세요...</LoadingText>
+      </PageContainer>
+      <Footer />
     </Container>
-);
+  );
 };
 
 export default Loading;
