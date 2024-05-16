@@ -18,7 +18,7 @@ const Router = createBrowserRouter([
     element: <VoiceUpload />,
   },
   {
-    path: "/voiceResult",
+    path: "/voiceResult/:taskId",
     element: <VoiceResult />,
   },
   {
