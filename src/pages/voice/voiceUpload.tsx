@@ -93,7 +93,6 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
   const handleButtonClick = () => {
     if (fileUploaded && file) {
       navigate(`/loading/105020`);
-      //임시 이동
       const formData = new FormData();
       formData.append('file', file);  // 파일 객체를 FormData에 추가
       

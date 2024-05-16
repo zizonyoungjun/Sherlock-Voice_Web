@@ -3,9 +3,9 @@ import styled, { keyframes, css } from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import IconOkay from '/Users/youngjunhan/Desktop/24-1/종설/Sherlock_Voice/Sherlock_Voice-Web/public/assets/images/icons/iconOkay.png';
-import IconConcerned from '/Users/youngjunhan/Desktop/24-1/종설/Sherlock_Voice/Sherlock_Voice-Web/public/assets/images/icons/IconConcerned.png';
-import IconDanger from '/Users/youngjunhan/Desktop/24-1/종설/Sherlock_Voice/Sherlock_Voice-Web/public/assets/images/icons/iconDanger.png';
+import IconOkay from '/public/assets/images/icons/iconOkay.png';
+import IconConcerned from '/public/assets/images/icons/IconConcerned.png';
+import IconDanger from '/public/assets/images/icons/iconDanger.png';
 
 interface CircleProps {
   score: number;
