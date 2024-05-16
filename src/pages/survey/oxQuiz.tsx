@@ -5,33 +5,40 @@ type OXQuizProps = {
   question: string;
   onYes: () => void;
   onNo: () => void;
-  currentQuestionIndex: number;  // 현재 질문 인덱스를 나타내는 새로운 prop 추가
+  currentQuestionIndex: number;
 };
 
 const QuizContainer = styled.div`
   background-color: #E1EFF6;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 30px;
   text-align: center;
-  max-width: 350px;
+  max-width: 400px;
   margin: auto;
   margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const QuestionText = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   color: #333;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   padding: 1px;
   padding-top: 12px;
-  line-height: 28px;
+  line-height: 1.5;
+  text-align: center;
   white-space: pre-wrap;
 `;
 
 const QuizImage = styled.img`
-  width: 270px;
+  width: 100%;
+  max-width: 270px;
   margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const Button = styled.button`
@@ -43,7 +50,8 @@ const Button = styled.button`
   cursor: pointer;
   outline: none;
   color: white;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
+
   &:first-child {
     background-color: #007BFF;
   }
@@ -52,6 +60,7 @@ const Button = styled.button`
   }
   &:hover {
     opacity: 0.8;
+    transform: translateY(-2px);
   }
 `;
 
@@ -62,7 +71,7 @@ const ButtonContainer = styled.div`
 `;
 
 const OXQuiz: React.FC<OXQuizProps> = ({ question, onYes, onNo, currentQuestionIndex }) => {
-  const imagePath = `/assets/images/survey/quiz${currentQuestionIndex + 1}.png`; // 이미지 경로 동적 생성
+  const imagePath = `/assets/images/survey/quiz${currentQuestionIndex + 1}.png`;
 
   return (
     <QuizContainer>
