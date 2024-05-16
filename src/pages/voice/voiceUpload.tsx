@@ -13,21 +13,28 @@ const PageContainer = styled.div`
   background-color: #fff;
   color: #fff;
   min-height: 100vh;
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-top: 80px;
+  width: 100%; // 부모 요소에 맞춰 넓이 설정
 `;
 
 const MainContent = styled.div`
-  margin-top: 32px;
+  margin-top: -180px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%; // 부모 요소에 맞춰 넓이 설정
 `;
 
 const UploadBox = styled.div`
@@ -40,6 +47,9 @@ const UploadBox = styled.div`
   max-width: 350px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const InfoText = styled.div`
@@ -82,6 +92,8 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
 
   const handleButtonClick = () => {
     if (fileUploaded && file) {
+      navigate(`/loading/105020`);
+      //임시 이동
       const formData = new FormData();
       formData.append('file', file);  // 파일 객체를 FormData에 추가
       
@@ -92,6 +104,7 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
       .then(response => response.json())
       .then(data => {
         if (data.task_id) {
+          console.log(data.task_id)
           navigate(`/loading/${data.task_id}`);
         }
       })
@@ -105,12 +118,12 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
 
   return (
     <Container>
-      <Header/>
+      <Header />
       <UploadBox>
-        <InfoText>의심되는 통화 녹음 파일을 업로드하여<br/>보이스 피싱 위험도와 대응법을<br/>간편히 확인해보세요 !</InfoText>
+        <InfoText>의심되는 통화 녹음 파일을 업로드하여<br />보이스 피싱 위험도와 대응법을<br />간편히 확인해보세요 !</InfoText>
         <div>
           {type === 'audio' && (
-            <img src={LogoDetective} style={{ width: '300px', height: 'auto' }}/>
+            <img src={LogoDetective} style={{ width: '300px', height: 'auto' }} />
           )}
           <input
             type="file"
@@ -129,6 +142,7 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
           </Button>
         </div>
       </UploadBox>
+      <Footer />
     </Container>
   );
 };
@@ -141,7 +155,6 @@ const VoiceUpload = () => {
       <MainContent>
         <Upload type="audio" />
       </MainContent>
-      <Footer/>
     </PageContainer>
   );
 };
