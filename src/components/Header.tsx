@@ -12,9 +12,8 @@ const StyledHeader = styled.header`
   border-bottom: 1px solid #ccc;
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 2;
+  max-width: 430px;
 `;
 
 const Header = () => {
