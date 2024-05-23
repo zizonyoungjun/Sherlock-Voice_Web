@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Lottie from 'lottie-react';
-import LoadingLottie from '/Users/youngjunhan/Desktop/24-1/종설/Sherlock_Voice/Sherlock_Voice-Web/public/assets/lottie/LoadingLottie.json';
+import LoadingLottie from '@assets/lottie/LoadingLottie.json';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
