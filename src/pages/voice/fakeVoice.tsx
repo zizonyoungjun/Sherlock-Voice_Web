@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import VoiceManual from './voiceManual';
@@ -153,8 +153,8 @@ const FakeVoice: React.FC = () => {
   }, [numericTaskId]);
 
 
-  let alertMessage = "";
-  let messageColor = "#2e7d32";
+  const alertMessage = "";
+  const messageColor = "#2e7d32";
 
   return (
     <Container>

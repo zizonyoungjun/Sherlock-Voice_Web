@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes} from 'styled-components';
 
 const Container = styled.div`
   display: flex;

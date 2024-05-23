@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import logoHeader from '/assets/images/logo/LogoHeader.png';
 

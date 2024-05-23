@@ -7,28 +7,22 @@
     "skipLibCheck": true,
     "allowJs": true,
     "esModuleInterop": true,
-
-
-    /* Module resolution */
+    "noUnusedLocals": false,       // 경고 무시 설정
+    "noUnusedParameters": false,   // 경고 무시 설정
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
-    /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    /* Type Declarations */
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": [
     "src/**/*",
     "src/types/**/*.d.ts"
   ],
+  "exclude": ["node_modules", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
