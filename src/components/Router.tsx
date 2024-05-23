@@ -6,6 +6,7 @@ import Loading from "../pages/voice/loading";
 import Survey from "../pages/survey/survey";
 import SurveyResult from "../pages/survey/surveyResult";
 import Landing from "../pages/landing";
+import FakeVoice from "../pages/voice/fakeVoice";
 
 
 const Router = createBrowserRouter([
@@ -32,6 +33,10 @@ const Router = createBrowserRouter([
   {
     path: "/surveyResult",
     element: <SurveyResult />,
+  },
+  {
+    path: "/fakeVoice",
+    element: <FakeVoice />,
   },
 ]);
 

@@ -6,7 +6,7 @@ import Footer from '../../components/Footer';
 import IconOkay from '/public/assets/images/icons/iconOkay.png';
 import IconConcerned from '/public/assets/images/icons/IconConcerned.png';
 import IconDanger from '/public/assets/images/icons/iconDanger.png';
-
+import VoiceManual from './voiceManual';
 
 interface CircleProps {
   score: number;
@@ -343,27 +343,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
           </KeywordListContainer>
         )}
       </ResultContainer>
-      <ManualContainer>
-        <Title>보이스피싱 대응 메뉴얼</Title>
-        <Step>
-          <StepTitle>1. 계좌 지급정지 신청하기</StepTitle>
-          <StepDescription>경찰청 112 혹은 금감원 1332에 전화하여 피해 신고와 계좌 지급정지를 신청하세요.</StepDescription>
-        </Step>
-        <Step>
-          <StepTitle>2. 악성앱 설치 대응</StepTitle>
-          <StepDescription>의심스러운 URL을 통한 악성앱 설치가 의심될 경우, 악성앱을 삭제하고 해당 휴대전화를 비행기모드로 전환하세요.</StepDescription>
-        </Step>
-        <Step>
-          <StepTitle>3. 명의도용 휴대전화 <br/>개설 조회 및 조치</StepTitle>
-          <StepDescription>
-            한국정보통신진흥협회 <a href="http://www.msafer.or.kr" target="_blank" rel="noopener noreferrer">명의도용방지 서비스</a>에 접속하여 본인 명의로 개설된 휴대전화를 확인하고, 필요한 조치를 취하세요.
-          </StepDescription>        
-        </Step>
-        <Step>
-          <StepTitle>4. 피해 구제 신청 절차</StepTitle>
-          <StepDescription>경찰서에 방문하여 피해 구제 신청을 서면으로 접수하세요.</StepDescription>
-        </Step>
-      </ManualContainer>
+      <VoiceManual/>
       <Footer />
     </Container>
   );
