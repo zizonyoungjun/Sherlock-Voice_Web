@@ -16,13 +16,19 @@ const QuizContainer = styled.div`
   text-align: center;
   max-width: 400px;
   margin: auto;
-  margin-top: 80px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* 추가 */
-  height: 550px;
+  justify-content: center;
+  height: 660px;
   width: 400px;
+`;
+
+const QuestionImage = styled.img`
+  width: 100px;
+  height: auto;
+  margin-bottom: 16px;
 `;
 
 const QuestionText = styled.p`
@@ -34,16 +40,16 @@ const QuestionText = styled.p`
   line-height: 1.5;
   text-align: center;
   white-space: pre-wrap;
-  overflow: hidden; /* 내용이 넘칠 경우 숨김 */
-  text-overflow: ellipsis; /* 넘치는 텍스트를 줄임표로 표시 */
-  max-height: 280px; /* 텍스트 영역의 최대 높이 설정 */
-  margin: 0; /* 추가 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 280px;
+  margin: 0;
 `;
 
 const QuizImage = styled.img`
   width: 100%;
   max-width: 270px;
-  margin: 20px auto 0; /* 수정 */
+  margin: 20px auto 0;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -78,12 +84,14 @@ const ButtonContainer = styled.div`
 `;
 
 const OXQuiz: React.FC<OXQuizProps> = ({ question, onYes, onNo, currentQuestionIndex }) => {
-  const imagePath = `/assets/images/survey/quiz${currentQuestionIndex + 1}.png`;
+  const questionImagePath = `/assets/images/survey/Q${currentQuestionIndex + 1}.png`;
+  const quizImagePath = `/assets/images/survey/quiz${currentQuestionIndex + 1}.png`;
 
   return (
     <QuizContainer>
+      <QuestionImage src={questionImagePath} alt={`Question Image ${currentQuestionIndex + 1}`} />
       <QuestionText>{question}</QuestionText>
-      <QuizImage src={imagePath} alt={`Quiz Image ${currentQuestionIndex + 1}`} />
+      <QuizImage src={quizImagePath} alt={`Quiz Image ${currentQuestionIndex + 1}`} />
       <ButtonContainer>
         <Button onClick={onYes}>O</Button>
         <Button onClick={onNo}>X</Button>
