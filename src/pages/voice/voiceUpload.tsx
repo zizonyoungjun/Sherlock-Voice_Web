@@ -24,8 +24,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 80px;
-  width: 100%; // 부모 요소에 맞춰 넓이 설정
+  margin-top: 100px;
+  width: 90%; // 부모 요소에 맞춰 넓이 설정
 `;
 
 const MainContent = styled.div`
