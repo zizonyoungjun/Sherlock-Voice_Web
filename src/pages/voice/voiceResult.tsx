@@ -25,11 +25,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  min-height: 100vh;
-  padding: 16px;
+  width: 81%;
+  min-height: 90vh;
+  padding: 14.4px;
   padding-top: 0px;
-  padding-bottom: 150px;
+  padding-bottom: 135px;
 `;
 
 const ScoreTextContainer = styled.div`
@@ -37,43 +37,43 @@ const ScoreTextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white; // 텍스트 색상을 흰색으로
-  padding: 0px 40px; // 충분한 패딩을 추가
-  border-radius: 10px; // 둥근 모서리
-  margin-top: 20px;
-  margin-bottom: 30px;
-  text-align: center; // 텍스트 중앙 정렬
+  color: white;
+  padding: 0px 36px;
+  border-radius: 9px;
+  margin-top: 18px;
+  margin-bottom: 27px;
+  text-align: center;
 `;
 
 const DescriptionText = styled.span`
-  color: #333; // 좀 더 진한 색상
-  font-size: 1.5rem;
+  color: #333;
+  font-size: 1.35rem;
   font-weight: 800;
-  margin-bottom: 10px;
-  font-size: 24px;
+  margin-bottom: 9px;
+  font-size: 21.6px;
 `;
 
 const ScoreText = styled.div`
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: bolder;
   background-color: white;
-  padding: 20px 40px;
-  border-radius: 50%;
+  padding: 18px 36px;
+  border-radius: 45%;
   color: #10439F;
   font-weight: 800;
 `;
 
 const Gauge = styled.svg`
-  width: 100%;
+  width: 90%;
   height: auto;
   transform: rotate(-90deg);
   position: relative;
 `;
 
 const GaugeImage = styled.image.attrs<GaugeImageProps>(props => ({
-  width: props.iconPath === IconDanger ? '18px' : '20px',
-  x: props.iconPath === IconDanger ? '33' : '32',
-  y: props.iconPath === IconDanger ? '33' : '32'
+  width: props.iconPath === IconDanger ? '16.2px' : '18px',
+  x: props.iconPath === IconDanger ? '33.9' : '33.1',
+  y: props.iconPath === IconDanger ? '33.9' : '33.1'
 }))`
   height: auto;
   transform: translate(-50%, -50%);
@@ -86,7 +86,7 @@ const CircleBg = styled.circle.attrs(() => ({
 }))`
   fill: none;
   stroke: #eee;
-  stroke-width: 10;
+  stroke-width: 9px;
 `;
 
 const Circle = styled.circle.attrs<CircleProps>(props => ({
@@ -96,37 +96,37 @@ const Circle = styled.circle.attrs<CircleProps>(props => ({
 }))<CircleProps>`
   fill: none;
   stroke: #6200ea;
-  stroke-width: 10;
+  stroke-width: 9px;
 `;
 
 const Title = styled.h1`
   color: navy;
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  margin-top: 9px;
+  margin-bottom: 27px;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.35px;
 `;
 
 const Step = styled.div`
-  margin-top: 20px;
-  padding: 15px;
+  margin-top: 18px;
+  padding: 13.5px;
   background-color: #f0f0f0;
-  border-left: 5px solid navy;
-  margin-bottom: 10px;
+  border-left: 4.5px solid navy;
+  margin-bottom: 9px;
 `;
 
 const StepTitle = styled.h2`
   color: #333;
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 16.2px;
+  margin-bottom: 9px;
   font-weight: bold;
 `;
 
 const StepDescription = styled.p`
-  font-size: 16px;
+  font-size: 14.4px;
   color: #555;
   margin-bottom: 0;
   line-height: 1.5;
@@ -138,51 +138,52 @@ const StepDescription = styled.p`
     }
   }
 `;
+
 const ResultContainer = styled.div`
   background-color: #FFF6D5;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 3.6px 7.2px rgba(0, 0, 0, 0.1);
+  padding: 27px;
   text-align: center;
-  max-width: 450px;
+  max-width: 405px;
   width: 100%;
-  margin: 20px auto;
-  margin-top: 100px;
+  margin: 18px auto;
+  margin-top: 90px;
 `;
 
 const ManualContainer = styled.div`
   background-color: #FFF6D5;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 3.6px 7.2px rgba(0, 0, 0, 0.1);
+  padding: 27px;
   text-align: center;
-  max-width: 450px;
+  max-width: 405px;
   width: 100%;
-  margin: 20px auto;
+  margin: 18px auto;
 `;
 
 const AlertMessage = styled.p<{ color: string }>`
   color: ${props => props.color};
-  font-size: 2rem;
-  margin: 10px;
+  font-size: 1.8rem;
+  margin: 9px;
   margin-top: 0px;
   font-weight: bold;
   white-space: pre-wrap;
-  line-height: 28px;
+  line-height: 25.2px;
 `;
 
 const KeywordListContainer = styled.div`
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 20px;
-  margin-top: 20px;
+  border-radius: 9px;
+  box-shadow: 0 1.8px 3.6px rgba(0, 0, 0, 0.1);
+  padding: 18px;
+  margin-top: 18px;
 `;
 
 const KeywordTitle = styled.h3`
   color: #333;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
+  margin-bottom: 9px;
+  font-size: 1.35rem;
 `;
 
 const KeywordList = styled.ul`
@@ -191,7 +192,7 @@ const KeywordList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 9px;
 `;
 
 const fadeIn = keyframes`
@@ -208,17 +209,17 @@ const fadeIn = keyframes`
 const KeywordItem = styled.li<{ index: number }>`
   background-color: #4B0082;
   color: white;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 20px;
-  font-size: 16px;
+  padding: 9px 13.5px;
+  margin: 4.5px;
+  border-radius: 18px;
+  font-size: 14.4px;
   font-weight: 500;
-  border: 2px solid #4B0082;
+  border: 1.8px solid #4B0082;
   transition: all 0.3s ease;
   cursor: pointer;
-  opacity: 0; // 초기에는 보이지 않도록 설정
+  opacity: 0;
   animation: ${fadeIn} 1s ease forwards;
-  animation-delay: ${props => 1.5 + props.index * 0.5}s;
+  animation-delay: ${props => 1.35 + props.index * 0.45}s;
 
   &:hover {
     background-color: white;
@@ -352,7 +353,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
 const VoiceResult: React.FC = () => {
   return (
     <div>
-      <CreditScore score={83} />
+      <CreditScore score={23} />
     </div>
   );
 };
