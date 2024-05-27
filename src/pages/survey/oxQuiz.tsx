@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import loadingSurvey from '@assets/lottie/loadingSurvey.json';
+import Lottie from 'lottie-react';
 
 type OXQuizProps = {
   question: string;
@@ -109,7 +111,7 @@ const OXQuiz: React.FC<OXQuizProps> = ({ question, onYes, onNo, currentQuestionI
           </ButtonContainer>
         </>
       ) : (
-        <p>Loading...</p>
+        <Lottie animationData={loadingSurvey} loop={true} autoplay={true} />
       )}
     </QuizContainer>
   );
