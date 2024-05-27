@@ -10,11 +10,12 @@ const FooterContainer = styled.footer`
   justify-content: space-around;
   width: 100%;
   background-color: #000;
-  padding: 10px 20px;
+  padding: 5px 20px; /* 높이 줄이기 위해 padding 조정 */
   border-top: 1px solid #ccc;
   position: fixed;
   bottom: 0;
   max-width: 430px;
+  height: 60px; /* 전체 높이 조정 */
 `;
 
 const IconWrapper = styled.div`
@@ -23,17 +24,17 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
-const Icon = styled.img` 
-  width: 48px;
+const Icon = styled.img`
+  width: 32px; /* 아이콘 크기 줄이기 */
   height: auto;
   margin-bottom: 3px;
 `;
 
-const CentralButton = styled.button` 
+const CentralButton = styled.a`
   background-color: #E1EFF6;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 60px; /* 중앙 버튼 크기 줄이기 */
+  height: 60px;
   border: 2px solid #ccc;
   position: relative;
   top: -20px;
@@ -41,12 +42,12 @@ const CentralButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 15px;
+  padding: 10px; /* 패딩 줄이기 */
 `;
 
 const IconLabel = styled.div`
   color: #fff;
-  font-size: 12px;
+  font-size: 10px; /* 글꼴 크기 줄이기 */
 `;
 
 const Footer = () => {
@@ -58,8 +59,8 @@ const Footer = () => {
                 </Link>
                 <IconLabel>녹음 분석</IconLabel>
             </IconWrapper>
-            <CentralButton as="a" href="/">
-                <Icon src={homeIcon} alt="home" style={{ width: '90%', height: 'auto' }}/>
+            <CentralButton href="/">
+                <Icon src={homeIcon} alt="home" style={{ width: '90%', height: 'auto' }} />
             </CentralButton>
             <IconWrapper>
                 <Link to="/survey">
