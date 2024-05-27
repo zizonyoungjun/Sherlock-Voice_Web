@@ -10,56 +10,56 @@ type OXQuizProps = {
 
 const QuizContainer = styled.div`
   background-color: #E1EFF6;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 30px;
+  border-radius: 16px; /* 20% 줄이기 */
+  box-shadow: 0 3.2px 6.4px rgba(0, 0, 0, 0.1); /* 20% 줄이기 */
+  padding: 24px; /* 20% 줄이기 */
   text-align: center;
-  max-width: 400px;
+  max-width: 320px; /* 20% 줄이기 */
   margin: auto;
-  margin-top: 40px;
+  margin-top: 32px; /* 20% 줄이기 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 660px;
-  width: 400px;
+  height: 528px; /* 20% 줄이기 */
+  width: 320px; /* 20% 줄이기 */
 `;
 
 const QuestionImage = styled.img`
-  width: 100px;
+  width: 80px; /* 20% 줄이기 */
   height: auto;
-  margin-bottom: 16px;
+  margin-bottom: 12.8px; /* 20% 줄이기 */
 `;
 
 const QuestionText = styled.p`
-  font-size: 20px;
+  font-size: 16px; /* 20% 줄이기 */
   color: #333;
-  margin-bottom: 16px;
-  padding: 1px;
-  padding-top: 12px;
+  margin-bottom: 12.8px; /* 20% 줄이기 */
+  padding: 0.8px; /* 20% 줄이기 */
+  padding-top: 9.6px; /* 20% 줄이기 */
   line-height: 1.5;
   text-align: center;
   white-space: pre-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 280px;
+  max-height: 224px; /* 20% 줄이기 */
   margin: 0;
 `;
 
 const QuizImage = styled.img`
   width: 100%;
-  max-width: 270px;
-  margin: 20px auto 0;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 216px; /* 20% 줄이기 */
+  margin: 16px auto 0; /* 20% 줄이기 */
+  border-radius: 8px; /* 20% 줄이기 */
+  box-shadow: 0 1.6px 3.2px rgba(0, 0, 0, 0.1); /* 20% 줄이기 */
 `;
 
 const Button = styled.button`
-  padding: 12px 24px;
+  padding: 9.6px 19.2px; /* 20% 줄이기 */
   border: none;
-  border-radius: 30px;
-  font-size: 20px;
-  margin: 0 10px;
+  border-radius: 24px; /* 20% 줄이기 */
+  font-size: 16px; /* 20% 줄이기 */
+  margin: 0 8px; /* 20% 줄이기 */
   cursor: pointer;
   outline: none;
   color: white;
@@ -80,7 +80,7 @@ const Button = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 16px; /* 20% 줄이기 */
 `;
 
 const OXQuiz: React.FC<OXQuizProps> = ({ question, onYes, onNo, currentQuestionIndex }) => {
