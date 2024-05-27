@@ -25,7 +25,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 81%;
+  width: 90%;
   min-height: 90vh;
   padding: 14.4px;
   padding-top: 0px;
@@ -353,7 +353,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
 const VoiceResult: React.FC = () => {
   return (
     <div>
-      <CreditScore score={23} />
+      <CreditScore score={83} />
     </div>
   );
 };
