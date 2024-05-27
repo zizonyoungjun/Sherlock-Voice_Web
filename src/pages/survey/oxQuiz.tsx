@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 type OXQuizProps = {
@@ -84,18 +84,33 @@ const ButtonContainer = styled.div`
 `;
 
 const OXQuiz: React.FC<OXQuizProps> = ({ question, onYes, onNo, currentQuestionIndex }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const questionImagePath = `/assets/images/survey/Q${currentQuestionIndex + 1}.png`;
   const quizImagePath = `/assets/images/survey/quiz${currentQuestionIndex + 1}.png`;
 
+  useEffect(() => {
+    setImageLoaded(false);
+    const img = new Image();
+    img.src = questionImagePath;
+    img.onload = () => setImageLoaded(true);
+  }, [questionImagePath]);
+
   return (
     <QuizContainer>
-      <QuestionImage src={questionImagePath} alt={`Question Image ${currentQuestionIndex + 1}`} />
-      <QuestionText>{question}</QuestionText>
-      <QuizImage src={quizImagePath} alt={`Quiz Image ${currentQuestionIndex + 1}`} />
-      <ButtonContainer>
-        <Button onClick={onYes}>O</Button>
-        <Button onClick={onNo}>X</Button>
-      </ButtonContainer>
+      {imageLoaded ? (
+        <>
+          <QuestionImage src={questionImagePath} alt={`Question Image ${currentQuestionIndex + 1}`} />
+          <QuestionText>{question}</QuestionText>
+          <QuizImage src={quizImagePath} alt={`Quiz Image ${currentQuestionIndex + 1}`} />
+          <ButtonContainer>
+            <Button onClick={onYes}>O</Button>
+            <Button onClick={onNo}>X</Button>
+          </ButtonContainer>
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </QuizContainer>
   );
 };
