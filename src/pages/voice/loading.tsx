@@ -55,18 +55,32 @@ const Loading = () => {
         });
         const data = await response.json();
         if (data.status === 'ready') {
-          setTimeout(() => {
-            if (!hasNavigated) { // 아직 페이지 이동이 실행되지 않았다면
-              navigate(`/voiceResult/${taskId}`); // 작업이 완료되면 결과 페이지로 이동
-              hasNavigated = true;
-            }
-          }, 7000); // 최소 5초 후에 페이지 이동
+          fetchResult(); // 상태가 준비되면 결과를 가져옴
         } else {
           setTimeout(checkStatus, 2000); // 2초 후에 다시 상태 확인
         }
       } catch (error) {
         console.error('Error checking status:', error);
         setTimeout(checkStatus, 2000); // 오류 발생 시 2초 후에 다시 시도
+      }
+    };
+
+    const fetchResult = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/result/${taskId}/`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        const data = await response.json();
+        if (data.Deepfake_check) {
+          navigate('/fakeVoice'); // 합성음성일 때 /fakeVoice로 이동
+        } else {
+          navigate(`/voiceResult/${taskId}`, { state: { result: data } }); // 그렇지 않은 경우 /voiceResult로 이동하고 데이터 전달
+        }
+      } catch (error) {
+        console.error('Error fetching result:', error);
       }
     };
 
