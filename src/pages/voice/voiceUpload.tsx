@@ -44,7 +44,7 @@ const UploadBox = styled.div`
   text-align: center;
   max-width: 350px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
