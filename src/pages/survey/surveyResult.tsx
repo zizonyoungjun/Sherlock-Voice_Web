@@ -6,13 +6,14 @@ import Footer from '../../components/Footer';
 import IconOkay from '/public/assets/images/icons/iconOkay.png';
 import IconConcerned from '/public/assets/images/icons/IconConcerned.png';
 import IconDanger from '/public/assets/images/icons/iconDanger.png';
+import Manual from '../voice/manual';
 
 interface CircleProps {
   score: number;
 }
 
 interface GaugeImageProps extends React.SVGProps<SVGImageElement> {
-  iconPath: string; // 커스텀 프로퍼티 추가
+  iconPath: string;
 }
 
 const Container = styled.div`
@@ -20,10 +21,22 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  width: 96%;
   min-height: 100vh;
   padding: 16px;
   padding-bottom: 150px;
+`;
+
+const InnerContainer = styled.div`
+  border: 3px solid #fff;
+  border-radius: 16px;
+  padding: 8px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ScoreTextContainer = styled.div`
@@ -55,7 +68,6 @@ const DescriptionText = styled.span`
   font-weight: normal;
   margin-bottom: 10px;
   font-size: 24px;
-
 `;
 
 const Gauge = styled.svg`
@@ -64,7 +76,6 @@ const Gauge = styled.svg`
   transform: rotate(-90deg);
   position: relative;
 `;
-
 
 const GaugeImage = styled.image.attrs<GaugeImageProps>(props => ({
   width: props.iconPath === IconDanger ? '18px' : '20px',
@@ -228,37 +239,20 @@ const SurveyResult: React.FC = () => {
     <Container>
       <Header />
       <ResultContainer>
-        <ScoreTextContainer>
-          <DescriptionText>설문 결과: </DescriptionText>
-          <HighlightText>{yesCount}/{totalQuestions}</HighlightText>
-        </ScoreTextContainer>        <Gauge viewBox="-8 -6 48 48">
-          <CircleBg cx="18" cy="18" r="16" />
-          <AnimatedCircle cx="18" cy="18" r="16" score={yesCount} />
-          <GaugeImage href={iconPath} iconPath={iconPath} />
-        </Gauge>
-        <AlertMessage color={messageColor}>{alertMessage}</AlertMessage>
+        <InnerContainer>
+          <ScoreTextContainer>
+            <DescriptionText>설문 결과: </DescriptionText>
+            <HighlightText>{yesCount}/{totalQuestions}</HighlightText>
+          </ScoreTextContainer>
+          <Gauge viewBox="-8 -6 48 48">
+            <CircleBg cx="18" cy="18" r="16" />
+            <AnimatedCircle cx="18" cy="18" r="16" score={yesCount} />
+            <GaugeImage href={iconPath} iconPath={iconPath} />
+          </Gauge>
+          <AlertMessage color={messageColor}>{alertMessage}</AlertMessage>
+        </InnerContainer>
       </ResultContainer>
-      <ManualContainer>
-        <Title>보이스피싱 대응 메뉴얼</Title>
-        <Step>
-          <StepTitle>1. 계좌 지급정지 신청하기</StepTitle>
-          <StepDescription>경찰청 112 혹은 금감원 1332에 전화하여 피해 신고와 계좌 지급정지를 신청하세요.</StepDescription>
-        </Step>
-        <Step>
-          <StepTitle>2. 악성앱 설치 대응</StepTitle>
-          <StepDescription>의심스러운 URL을 통한 악성앱 설치가 의심될 경우, 악성앱을 삭제하고 해당 휴대전화를 비행기모드로 전환하세요.</StepDescription>
-        </Step>
-        <Step>
-          <StepTitle>3. 명의도용 휴대전화 <br/>개설 조회 및 조치</StepTitle>
-          <StepDescription>
-            한국정보통신진흥협회 <a href="http://www.msafer.or.kr" target="_blank" rel="noopener noreferrer">명의도용방지 서비스</a>에 접속하여 본인 명의로 개설된 휴대전화를 확인하고, 필요한 조치를 취하세요.
-          </StepDescription>        
-        </Step>
-        <Step>
-          <StepTitle>4. 피해 구제 신청 절차</StepTitle>
-          <StepDescription>경찰서에 방문하여 피해 구제 신청을 서면으로 접수하세요.</StepDescription>
-        </Step>
-      </ManualContainer>
+      <Manual/>
       <Footer />
     </Container>
   );
