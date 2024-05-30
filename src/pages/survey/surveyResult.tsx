@@ -21,7 +21,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 96%;
+  width: 95%;
   min-height: 100vh;
   padding: 16px;
   padding-bottom: 150px;
@@ -172,7 +172,7 @@ const ManualContainer = styled.div`
 const AlertMessage = styled.p<{ color: string }>`
   color: ${props => props.color};
   margin-top: 20px;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   white-space: pre-wrap;
   line-height: 28px;
@@ -226,7 +226,7 @@ const SurveyResult: React.FC = () => {
     messageColor = "#2e7d32";
     iconPath = IconOkay;
   } else if (yesCount <= 5) {
-    alertMessage = `보이스피싱 위험도가 중간입니다.\n관련 지식을 업데이트 하고 주의하세요.`;
+    alertMessage = `보이스피싱 위험도가 중간입니다.\n관련 지식을 업데이트 하고\n주의하세요.`;
     messageColor = "#ffc107";
     iconPath = IconConcerned;
   } else {
