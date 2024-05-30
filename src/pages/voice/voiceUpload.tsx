@@ -5,9 +5,7 @@ import LogoDetective from '/assets/images/logo/LogoDetective.png';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer';
 
-interface UploadBoxProps {
-  type: 'audio';
-}
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const PageContainer = styled.div`
   background-color: #fff;
@@ -25,7 +23,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 150px;
-  width: 90%; // 부모 요소에 맞춰 넓이 설정
+  width: 90%;
 `;
 
 const MainContent = styled.div`
@@ -34,7 +32,7 @@ const MainContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%; // 부모 요소에 맞춰 넓이 설정
+  width: 100%;
 `;
 
 const UploadBox = styled.div`
@@ -47,6 +45,16 @@ const UploadBox = styled.div`
   max-width: 350px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const InnerContainer = styled.div`
+  border: 3px solid #fff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,43 +83,41 @@ const Button = styled.button`
   margin-top: 32px;
 `;
 
-const Upload: React.FC<UploadBoxProps> = ({ type }) => {
+const Upload: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File | null>(null);  // 파일 객체를 저장할 상태
-  const [fileUploaded, setFileUploaded] = useState(false); // 파일 업로드 상태를 관리
+  const [file, setFile] = useState<File | null>(null);
+  const [fileUploaded, setFileUploaded] = useState(false);
   const navigate = useNavigate();
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files[0]) {
-      setFile(files[0]); // 파일 객체 저장
-      setFileUploaded(true); // 파일이 선택되었다는 상태를 true로 설정
+      setFile(files[0]);
+      setFileUploaded(true);
       console.log('File selected:', files[0].name);
     }
   };
 
   const handleButtonClick = () => {
     if (fileUploaded && file) {
-      navigate(`/loading/105020`);
       const formData = new FormData();
-      formData.append('file', file);  // 파일 객체를 FormData에 추가
-      
-      fetch('http://127.0.0.1:8000/upload/', {
+      formData.append('file', file);
+
+      fetch(`${API_BASE_URL}/upload/`, {
         method: 'POST',
         body: formData,
       })
       .then(response => response.json())
       .then(data => {
-        if (data.task_id) {
-          console.log(data.task_id)
-          navigate(`/loading/${data.task_id}`);
-        }
+        console.log('File uploaded successfully');
+        localStorage.setItem('task_id', data.task_id); // task_id를 localStorage에 저장
+        navigate('/loading');
       })
       .catch(error => {
         console.error('Upload error:', error);
       });
     } else {
-      fileInputRef.current?.click();  // 파일이 선택되지 않았다면 파일 선택창을 열도록 함
+      fileInputRef.current?.click();
     }
   };
 
@@ -119,27 +125,27 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
     <Container>
       <Header />
       <UploadBox>
-        <InfoText>의심되는 통화 녹음 파일을 업로드하여<br />보이스 피싱 위험도와 대응법을<br />간편히 확인해보세요 !</InfoText>
-        <div>
-          {type === 'audio' && (
+        <InnerContainer>
+          <InfoText>의심되는 통화 녹음 파일을 업로드하여<br />보이스 피싱 위험도와 대응법을<br />간편히 확인해보세요 !</InfoText>
+          <div>
             <img src={LogoDetective} style={{ width: '300px', height: 'auto' }} />
-          )}
-          <input
-            type="file"
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            accept="audio/*"
-          />
-          <Button 
-            onClick={handleButtonClick}
-            style={{
-              backgroundColor: fileUploaded ? '#28a745' : '#002D4E'
-            }}
-          >
-            {fileUploaded ? '분석 시작하기' : '녹음 파일 올리기'}
-          </Button>
-        </div>
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              accept="audio/*"
+            />
+            <Button 
+              onClick={handleButtonClick}
+              style={{
+                backgroundColor: fileUploaded ? '#28a745' : '#002D4E'
+              }}
+            >
+              {fileUploaded ? '분석 시작하기' : '녹음 파일 올리기'}
+            </Button>
+          </div>
+        </InnerContainer>
       </UploadBox>
       <Footer />
     </Container>
@@ -147,12 +153,10 @@ const Upload: React.FC<UploadBoxProps> = ({ type }) => {
 };
 
 const VoiceUpload = () => {
-  const [fileUploaded, setFileUploaded] = useState(false);
-
   return (
     <PageContainer>
       <MainContent>
-        <Upload type="audio" />
+        <Upload />
       </MainContent>
     </PageContainer>
   );

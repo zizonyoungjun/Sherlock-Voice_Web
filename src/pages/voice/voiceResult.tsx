@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import IconOkay from '/public/assets/images/icons/iconOkay.png';
 import IconConcerned from '/public/assets/images/icons/IconConcerned.png';
 import IconDanger from '/public/assets/images/icons/iconDanger.png';
-import VoiceManual from './voiceManual';
+import Manual from './manual';
+import PhishingCategory from './phishingCategory';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface CircleProps {
   score: number;
 }
 
 interface GaugeImageProps extends React.SVGProps<SVGImageElement> {
-  iconPath: string; // 커스텀 프로퍼티 추가
+  iconPath: string;
 }
 
 interface CreditScoreProps {
@@ -30,6 +33,7 @@ const Container = styled.div`
   padding: 14.4px;
   padding-top: 0px;
   padding-bottom: 135px;
+  margin: 0 auto;
 `;
 
 const ScoreTextContainer = styled.div`
@@ -151,17 +155,6 @@ const ResultContainer = styled.div`
   margin-top: 90px;
 `;
 
-const ManualContainer = styled.div`
-  background-color: #FFF6D5;
-  border-radius: 18px;
-  box-shadow: 0 3.6px 7.2px rgba(0, 0, 0, 0.1);
-  padding: 27px;
-  text-align: center;
-  max-width: 405px;
-  width: 100%;
-  margin: 18px auto;
-`;
-
 const AlertMessage = styled.p<{ color: string }>`
   color: ${props => props.color};
   font-size: 1.8rem;
@@ -232,16 +225,16 @@ const percentage = (score: number, maxScore: number): number => (score / maxScor
 
 const scoreToColor = (score: number): string => {
   if (score < 40) {
-    return "#33C642"; // 진한 초록색
+    return "#33C642";
   } else if (score < 50) {
-    const transitionProgress = (score - 30) / 20; // 30점에서 50점 사이의 진행률을 계산
-    const red = Math.round(255); // 노랑의 빨강 구성 요소는 항상 255
-    const green = Math.round(193 + (62 * (1 - transitionProgress))); // 193에서 255로 증가
-    const blue = Math.round(7 * (1 - transitionProgress)); // 7에서 0으로 감소
+    const transitionProgress = (score - 30) / 20;
+    const red = Math.round(255);
+    const green = Math.round(193 + (62 * (1 - transitionProgress)));
+    const blue = Math.round(7 * (1 - transitionProgress));
     return `rgb(${red}, ${green}, ${blue})`;
   } else {
-    const transitionProgress = (score - 50) / 50; // 50점에서 100점 사이의 진행률을 계산
-    const green = Math.round(193 * (1 - transitionProgress)); // 노랑에서 빨강으로: 초록이 193에서 0으로 감소
+    const transitionProgress = (score - 50) / 50;
+    const green = Math.round(193 * (1 - transitionProgress));
     return `rgb(255, ${green}, 0)`;
   }
 };
@@ -259,7 +252,7 @@ const createAnimation = (score: number) => keyframes`
 
 const AnimatedCircle = styled(Circle)<CircleProps>`
   stroke: ${props => scoreToColor(props.score)};
-  animation: ${props => css`${createAnimation(props.score)} 1.5s ease-out forwards`};
+  animation: ${props => css`${createAnimation(props.score)} 1.35s ease-out forwards`};
 `;
 
 const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
@@ -267,23 +260,31 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   const numericTaskId = parseInt(taskId ?? '0', 10);
   const [keywords, setKeywords] = useState<string[]>(['검찰청', '계좌', '만나서']);
   const [displayedScore, setDisplayedScore] = useState<number>(0);
+  const [voicePhishing, setVoicePhishing] = useState<string>("");
+  const [voicePhishingProb, setVoicePhishingProb] = useState<number>(83);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/result/${numericTaskId}/`, {
+    fetch(`${API_BASE_URL}/result/${numericTaskId}/`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.keywords && data.keywords.length > 0) {
-        setKeywords(data.keywords);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching keywords:', error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        if (data.Deepfake_check) {
+          navigate('/fakeVoice');
+        } else {
+          setVoicePhishing(data.VoicePhishing || "");
+          setVoicePhishingProb(data.VoicePhishing_prob || 83);
+          const receivedKeywords = data.Keywords || ['검찰청', '계좌', '만나서'];
+          setKeywords(receivedKeywords);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching result:', error);
+      });
   }, [numericTaskId]);
 
   useEffect(() => {
@@ -291,7 +292,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
     const end = score;
     if (start === end) return;
 
-    const duration = 1500; // 애니메이션 지속 시간 (밀리초)
+    const duration = 1350;
     const increment = end > start ? 1 : -1;
     const stepTime = Math.abs(Math.floor(duration / (end - start)));
     const timer = setInterval(() => {
@@ -306,17 +307,33 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   let messageColor = "#2e7d32";
   let iconPath;
 
-  if (score < 40) {
-    alertMessage = `보이스피싱 위험도가 낮습니다.\n그러나 항상 주의하세요.`;
-    iconPath = IconOkay;
-  } else if (score <= 70) {
-    alertMessage = `보이스피싱 위험도가 중간입니다.\n관련 지식을 업데이트 하고 주의하세요.`;
-    messageColor = "#ffc107";
-    iconPath = IconConcerned;
+  if (voicePhishing === "보이스피싱 전화") {
+    if (voicePhishingProb < 40) {
+      alertMessage = `보이스피싱 위험도가 낮습니다.\n그러나 항상 주의하세요.`;
+      iconPath = IconOkay;
+    } else if (voicePhishingProb <= 70) {
+      alertMessage = `보이스피싱 위험도가 중간입니다.\n관련 지식을 업데이트 하고 주의하세요.`;
+      messageColor = "#ffc107";
+      iconPath = IconConcerned;
+    } else {
+      alertMessage = `보이스피싱 위험도가 높습니다.\n즉시 아래 메뉴얼을 따라주세요.`;
+      messageColor = "#d32f2f";
+      iconPath = IconDanger;
+    }
   } else {
-    alertMessage = `보이스피싱 위험도가 높습니다.\n즉시 아래 메뉴얼을 따라주세요.`;
-    messageColor = "#d32f2f";
-    iconPath = IconDanger;
+    if (voicePhishingProb < 40) {
+      alertMessage = `일반 음성 전화입니다.\n문제가 없습니다.`;
+      messageColor = "#33C642";
+      iconPath = IconOkay;
+    } else if (voicePhishingProb <= 70) {
+      alertMessage = `일반 음성 전화입니다.\n주의가 필요합니다.`;
+      messageColor = "#ffc107";
+      iconPath = IconConcerned;
+    } else {
+      alertMessage = `일반 음성 전화입니다.\n주의가 필요합니다.`;
+      messageColor = "#d32f2f";
+      iconPath = IconDanger;
+    }
   }
 
   return (
@@ -344,16 +361,38 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
           </KeywordListContainer>
         )}
       </ResultContainer>
-      <VoiceManual/>
+      <PhishingCategory keywords={keywords} />
+      <Manual />
       <Footer />
     </Container>
   );
 };
 
 const VoiceResult: React.FC = () => {
+  const { taskId } = useParams<{ taskId: string }>();
+  const [score, setScore] = useState<number>(83);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/result/${taskId}/`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (!data.Deepfake_check) {
+          setScore(data.VoicePhishing_prob || 83);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching score:', error);
+      });
+  }, [taskId]);
+
   return (
     <div>
-      <CreditScore score={83} />
+      <CreditScore score={score} />
     </div>
   );
 };

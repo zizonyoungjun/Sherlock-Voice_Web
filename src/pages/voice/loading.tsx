@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Lottie from 'lottie-react';
-import LoadingLottie from '@assets/lottie/LoadingLottie.json';
+import LoadingLottie from '../../assets/lottie/LoadingLottie.json';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Container = styled.div`
   display: flex;
@@ -38,16 +40,19 @@ const LoadingText = styled.div`
 `;
 
 const Loading = () => {
-  const { taskId } = useParams(); // URL 파라미터에서 task_id를 가져옵니다.
   const navigate = useNavigate();
-  const [status, setStatus] = useState('processing'); // 초기 상태는 'processing'
+  const [status, setStatus] = useState('processing');
 
   useEffect(() => {
-    let hasNavigated = false; // 페이지 이동 여부를 추적하기 위한 변수
+    const task_id = localStorage.getItem('task_id');
+    if (!task_id) {
+      console.error('No task_id found in localStorage');
+      return;
+    }
 
     const checkStatus = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/waiting/${taskId}/`, {
+        const response = await fetch(`${API_BASE_URL}/waiting/${task_id}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json'
@@ -55,41 +60,18 @@ const Loading = () => {
         });
         const data = await response.json();
         if (data.status === 'ready') {
-          fetchResult(); // 상태가 준비되면 결과를 가져옴
+          navigate(`/voiceResult/${task_id}`);
         } else {
-          setTimeout(checkStatus, 2000); // 2초 후에 다시 상태 확인
+          setTimeout(checkStatus, 2000);
         }
       } catch (error) {
         console.error('Error checking status:', error);
-        setTimeout(checkStatus, 2000); // 오류 발생 시 2초 후에 다시 시도
+        setTimeout(checkStatus, 2000);
       }
     };
 
-    const fetchResult = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/result/${taskId}/`, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-        const data = await response.json();
-        if (data.Deepfake_check) {
-          navigate('/fakeVoice'); // 합성음성일 때 /fakeVoice로 이동
-        } else {
-          navigate(`/voiceResult/${taskId}`, { state: { result: data } }); // 그렇지 않은 경우 /voiceResult로 이동하고 데이터 전달
-        }
-      } catch (error) {
-        console.error('Error fetching result:', error);
-      }
-    };
-
-    checkStatus(); // 컴포넌트 마운트 시 작업 상태 확인 시작
-
-    return () => {
-      hasNavigated = true; // 컴포넌트가 언마운트되면 이동 플래그를 설정하여 불필요한 이동을 방지
-    };
-  }, [navigate, taskId]); // taskId가 변경될 때마다 효과를 다시 실행
+    checkStatus();
+  }, [navigate]);
 
   return (
     <Container>
