@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Lottie from 'lottie-react';
-import skullLottie from '@assets/lottie/skullLottie.json';
+import thiefLottie from '@assets/lottie/thiefLottie.json';
 import Manual from './manual';
 
 const Container = styled.div`
@@ -39,6 +39,8 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+
 `;
 
 const AlertMessage = styled.p`
@@ -75,7 +77,7 @@ const FakeVoice: React.FC = () => {
       <ResultContainer>
         <InnerContainer>
           <LottieContainer>
-            <Lottie animationData={skullLottie} loop={true} />
+            <Lottie animationData={thiefLottie} loop={true} />
           </LottieContainer>
           <AlertMessage>🚨 보이스피싱 위험도가 높은 합성 음성 파일입니다. 🚨</AlertMessage>
           <InstructionMessage>
