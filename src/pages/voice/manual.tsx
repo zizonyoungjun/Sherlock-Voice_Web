@@ -6,12 +6,22 @@ const ManualContainer = styled.div`
   background-color: #FFF6D5;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 20px;
+  padding: 5px;
   text-align: center;
   margin: 20px auto;
   max-width: 500px;
   width: 100%;
-  padding-top: 25px;
+  padding-top: 5px;
+`;
+
+const InnerContainer = styled.div`
+  border: 3px solid #fff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ManualImage = styled.img`
@@ -43,10 +53,12 @@ const DescriptionText = styled.span`
 const Manual: React.FC = () => {
   return (
     <ManualContainer>
-      <DescriptionContainer>
-        <DescriptionText>보이스피싱 대응메뉴얼</DescriptionText>
-      </DescriptionContainer>
-      <ManualImage src={manual} alt="Manual" />
+      <InnerContainer>
+        <DescriptionContainer>
+          <DescriptionText>보이스피싱 대응메뉴얼</DescriptionText>
+        </DescriptionContainer>
+        <ManualImage src={manual} alt="Manual" />
+      </InnerContainer>
     </ManualContainer>
   );
 };
