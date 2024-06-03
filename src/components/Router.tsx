@@ -39,10 +39,6 @@ const Router = createBrowserRouter([
     path: "/fakeVoice",
     element: <FakeVoice />,
   },
-  {
-    path: "/test",
-    element: <ResultTest />,
-  },
 ]);
 
 export default Router;
