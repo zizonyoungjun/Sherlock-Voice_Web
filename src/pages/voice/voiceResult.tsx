@@ -36,6 +36,16 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+const InnerContainer = styled.div`
+  border: 3px solid #fff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const ScoreTextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -103,45 +113,6 @@ const Circle = styled.circle.attrs<CircleProps>(props => ({
   stroke-width: 9px;
 `;
 
-const Title = styled.h1`
-  color: navy;
-  font-size: 2.25rem;
-  font-weight: bold;
-  margin-top: 9px;
-  margin-bottom: 27px;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1.35px;
-`;
-
-const Step = styled.div`
-  margin-top: 18px;
-  padding: 13.5px;
-  background-color: #f0f0f0;
-  border-left: 4.5px solid navy;
-  margin-bottom: 9px;
-`;
-
-const StepTitle = styled.h2`
-  color: #333;
-  font-size: 16.2px;
-  margin-bottom: 9px;
-  font-weight: bold;
-`;
-
-const StepDescription = styled.p`
-  font-size: 14.4px;
-  color: #555;
-  margin-bottom: 0;
-  line-height: 1.5;
-  a {
-    color: #007BFF;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
 
 const ResultContainer = styled.div`
   background-color: #FFF6D5;
@@ -340,26 +311,28 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
     <Container>
       <Header />
       <ResultContainer>
-        <ScoreTextContainer>
-          <DescriptionText>보이스피싱 위험도</DescriptionText>
-          <ScoreText>{displayedScore}%</ScoreText>
-        </ScoreTextContainer>
-        <Gauge viewBox="-8 -6 48 48">
-          <CircleBg cx="18" cy="18" r="16" />
-          <AnimatedCircle cx="18" cy="18" r="16" score={score} />
-          <GaugeImage href={iconPath} iconPath={iconPath} />
-        </Gauge>
-        <AlertMessage color={messageColor}>{alertMessage}</AlertMessage>
-        {keywords.length > 0 && (
-          <KeywordListContainer>
-            <KeywordTitle>🚨 감지된 위험 키워드 🚨</KeywordTitle>
-            <KeywordList>
-              {keywords.map((keyword: string, index: number) => (
-                <KeywordItem key={index} index={index}>{keyword}</KeywordItem>
-              ))}
-            </KeywordList>
-          </KeywordListContainer>
-        )}
+        <InnerContainer>
+          <ScoreTextContainer>
+            <DescriptionText>보이스피싱 위험도</DescriptionText>
+            <ScoreText>{displayedScore}%</ScoreText>
+          </ScoreTextContainer>
+          <Gauge viewBox="-8 -6 48 48">
+            <CircleBg cx="18" cy="18" r="16" />
+            <AnimatedCircle cx="18" cy="18" r="16" score={score} />
+            <GaugeImage href={iconPath} iconPath={iconPath} />
+          </Gauge>
+          <AlertMessage color={messageColor}>{alertMessage}</AlertMessage>
+          {keywords.length > 0 && (
+            <KeywordListContainer>
+              <KeywordTitle>🚨 감지된 위험 키워드 🚨</KeywordTitle>
+              <KeywordList>
+                {keywords.map((keyword: string, index: number) => (
+                  <KeywordItem key={index} index={index}>{keyword}</KeywordItem>
+                ))}
+              </KeywordList>
+            </KeywordListContainer>
+          )}
+        </InnerContainer>
       </ResultContainer>
       <PhishingCategory keywords={keywords} />
       <Manual />
