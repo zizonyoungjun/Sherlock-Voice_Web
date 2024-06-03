@@ -113,7 +113,6 @@ const Circle = styled.circle.attrs<CircleProps>(props => ({
   stroke-width: 9px;
 `;
 
-
 const ResultContainer = styled.div`
   background-color: #FFF6D5;
   border-radius: 18px;
@@ -235,6 +234,8 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   const [voicePhishingProb, setVoicePhishingProb] = useState<number>(83);
   const navigate = useNavigate();
 
+  const dangerKeywords = ['검찰청', '복권', '상품권', '대출'];
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/result/${numericTaskId}/`, {
       method: 'GET',
@@ -307,6 +308,8 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
     }
   }
 
+  const showPhishingCategory = voicePhishingProb >= 40 && dangerKeywords.some(keyword => keywords.includes(keyword));
+
   return (
     <Container>
       <Header />
@@ -334,7 +337,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
           )}
         </InnerContainer>
       </ResultContainer>
-      <PhishingCategory keywords={keywords} />
+      {showPhishingCategory && <PhishingCategory keywords={keywords} />}
       <Manual />
       <Footer />
     </Container>
