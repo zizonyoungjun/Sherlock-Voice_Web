@@ -44,8 +44,10 @@ const HighlightedText = styled.span`
 `;
 
 const LottieContainer = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 `;
 
