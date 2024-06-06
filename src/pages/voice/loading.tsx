@@ -44,32 +44,13 @@ const Loading = () => {
   const [status, setStatus] = useState('processing');
 
   useEffect(() => {
-    const formData = JSON.parse(localStorage.getItem('fileToUpload') || '{}');
-    if (!formData) {
-      console.error('No file to upload found in localStorage');
+    const task_id = localStorage.getItem('task_id');
+    if (!task_id) {
+      console.error('No task_id found in localStorage');
       return;
     }
 
-    const uploadFile = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/upload/`, {
-          method: 'POST',
-          body: formData,
-        });
-        const data = await response.json();
-        if (data.task_id) {
-          localStorage.removeItem('fileToUpload');
-          localStorage.setItem('task_id', data.task_id);
-          checkStatus(data.task_id);
-        } else {
-          console.error('Failed to get task_id from response');
-        }
-      } catch (error) {
-        console.error('Upload error:', error);
-      }
-    };
-
-    const checkStatus = async (task_id: string) => {
+    const checkStatus = async (startTime: number) => {
       try {
         const response = await fetch(`${API_BASE_URL}/waiting/${task_id}`, {
           method: 'GET',
@@ -80,16 +61,24 @@ const Loading = () => {
         const data = await response.json();
         if (data.status === 'ready') {
           navigate(`/voiceResult/${task_id}`);
+        } else if (Date.now() - startTime < 60000) { // 1분 타임아웃
+          setTimeout(() => checkStatus(startTime), 2000); // 2초 후에 다시 상태 확인
         } else {
-          setTimeout(() => checkStatus(task_id), 2000);
+          console.error('Request timed out.');
+          setStatus('timeout'); // 타임아웃 상태로 설정
         }
       } catch (error) {
         console.error('Error checking status:', error);
-        setTimeout(() => checkStatus(task_id), 2000);
+        if (Date.now() - startTime < 60000) { // 1분 타임아웃
+          setTimeout(() => checkStatus(startTime), 2000); // 오류 발생 시 2초 후에 다시 시도
+        } else {
+          console.error('Request timed out.');
+          setStatus('timeout'); // 타임아웃 상태로 설정
+        }
       }
     };
 
-    uploadFile();
+    checkStatus(Date.now()); // 컴포넌트 마운트 시 작업 상태 확인 시작
   }, [navigate]);
 
   return (
@@ -97,7 +86,11 @@ const Loading = () => {
       <Header />
       <PageContainer>
         <LoadingAnimation animationData={LoadingLottie} loop={true} />
-        <LoadingText>녹음 파일을 분석 중입니다.<br />잠시만 기다려주세요...</LoadingText>
+        <LoadingText>
+          {status === 'processing'
+            ? '녹음 파일을 분석 중입니다.\n잠시만 기다려주세요...'
+            : '요청 시간이 초과되었습니다.\n다시 시도해 주세요.'}
+        </LoadingText>
       </PageContainer>
       <Footer />
     </Container>
