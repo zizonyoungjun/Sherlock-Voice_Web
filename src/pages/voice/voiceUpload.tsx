@@ -111,7 +111,13 @@ const Upload: React.FC = () => {
         method: 'POST',
         body: formData,
       })
-      .then(response => response.json())
+      .then(response => {
+        console.log('Response status:', response.status); // 응답 상태 로그 추가
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         console.log('File uploaded successfully');
         localStorage.setItem('task_id', data.task_id); // task_id를 localStorage에 저장
