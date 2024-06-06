@@ -237,6 +237,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   const dangerKeywords = ['검찰청', '복권', '상품권', '대출'];
 
   useEffect(() => {
+    console.log('Fetching result from:', `${API_BASE_URL}/result/${numericTaskId}/`);
     fetch(`${API_BASE_URL}/result/${numericTaskId}/`, {
       method: 'GET',
       headers: {
@@ -258,7 +259,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
         console.error('Error fetching result:', error);
       });
   }, [numericTaskId]);
-
+  
   useEffect(() => {
     let start = 0;
     const end = score;
@@ -349,6 +350,7 @@ const VoiceResult: React.FC = () => {
   const [score, setScore] = useState<number>(83);
 
   useEffect(() => {
+    console.log('Fetching result from:', `${API_BASE_URL}/result/${taskId}`);
     fetch(`${API_BASE_URL}/result/${taskId}`, {
       method: 'GET',
       headers: {
@@ -365,6 +367,7 @@ const VoiceResult: React.FC = () => {
         console.error('Error fetching score:', error);
       });
   }, [taskId]);
+  
 
   return (
     <div>
