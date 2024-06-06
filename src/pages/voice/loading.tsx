@@ -45,6 +45,7 @@ const Loading = () => {
 
   useEffect(() => {
     const task_id = localStorage.getItem('task_id');
+    console.log(task_id)
     if (!task_id) {
       console.error('No task_id found in localStorage');
       return;
