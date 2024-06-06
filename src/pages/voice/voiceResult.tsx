@@ -349,7 +349,7 @@ const VoiceResult: React.FC = () => {
   const [score, setScore] = useState<number>(83);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/result/${taskId}/`, {
+    fetch(`${API_BASE_URL}/result/${taskId}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
