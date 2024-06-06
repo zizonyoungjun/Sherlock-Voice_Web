@@ -9,7 +9,11 @@ import IconDanger from '/public/assets/images/icons/iconDanger.png';
 import Manual from './manual';
 import PhishingCategory from './phishingCategory';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL.replace(/^http:\/\//i, 'https://');
+// Environment variable
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// Log the API base URL to ensure it's correct
+console.log('API_BASE_URL:', API_BASE_URL);
 
 interface CircleProps {
   score: number;
@@ -259,7 +263,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
         console.error('Error fetching result:', error);
       });
   }, [numericTaskId]);
-  
+
   useEffect(() => {
     let start = 0;
     const end = score;
@@ -367,7 +371,6 @@ const VoiceResult: React.FC = () => {
         console.error('Error fetching score:', error);
       });
   }, [taskId]);
-  
 
   return (
     <div>
