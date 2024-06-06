@@ -228,7 +228,7 @@ const AnimatedCircle = styled(Circle)<CircleProps>`
 const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   const { taskId } = useParams<{ taskId: string }>();
   const numericTaskId = parseInt(taskId ?? '0', 10);
-  const [keywords, setKeywords] = useState<string[]>(['검찰청', '계좌', '만나서']);
+  const [keywords, setKeywords] = useState<string[]>([]);
   const [displayedScore, setDisplayedScore] = useState<number>(0);
   const [voicePhishing, setVoicePhishing] = useState<string>("");
   const [voicePhishingProb, setVoicePhishingProb] = useState<number>(83);
@@ -250,8 +250,9 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
         } else {
           setVoicePhishing(data.VoicePhishing || "");
           setVoicePhishingProb(data.VoicePhishing_prob || 83);
-          const receivedKeywords = data.Keywords || ['검찰청', '계좌', '만나서'];
-          setKeywords(receivedKeywords);
+          if (data.Keywords) {
+            setKeywords(data.Keywords);
+          }
         }
       })
       .catch(error => {
@@ -308,7 +309,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
     }
   }
 
-  const showPhishingCategory = voicePhishingProb >= 40 && dangerKeywords.some(keyword => keywords.includes(keyword));
+  const showPhishingCategory = voicePhishingProb >= 40 && keywords.length > 0 && dangerKeywords.some(keyword => keywords.includes(keyword));
 
   return (
     <Container>
