@@ -88,8 +88,7 @@ const Upload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [fileUploaded, setFileUploaded] = useState(false);
   const navigate = useNavigate();
-  console.log('API_BASE_URL:', import.meta.env.VITE_API_BASE_URL); // 콘솔 로그 추가
-
+  console.log('API_BASE_URL:', API_BASE_URL); // 콘솔 로그 추가
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;

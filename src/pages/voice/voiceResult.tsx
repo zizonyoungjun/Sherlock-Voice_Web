@@ -250,9 +250,8 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
         } else {
           setVoicePhishing(data.VoicePhishing || "");
           setVoicePhishingProb(data.VoicePhishing_prob || 83);
-          if (data.Keywords) {
-            setKeywords(data.Keywords);
-          }
+          const receivedKeywords = data.Keywords || [];
+          setKeywords(receivedKeywords);
         }
       })
       .catch(error => {
@@ -309,7 +308,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
     }
   }
 
-  const showPhishingCategory = voicePhishingProb >= 40 && keywords.length > 0 && dangerKeywords.some(keyword => keywords.includes(keyword));
+  const showPhishingCategory = voicePhishingProb >= 40 && dangerKeywords.some(keyword => keywords.includes(keyword));
 
   return (
     <Container>
