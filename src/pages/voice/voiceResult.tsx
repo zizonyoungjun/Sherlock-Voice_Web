@@ -9,7 +9,7 @@ import IconDanger from '/public/assets/images/icons/iconDanger.png';
 import Manual from './manual';
 import PhishingCategory from './phishingCategory';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = '/api';
 
 interface CircleProps {
   score: number;

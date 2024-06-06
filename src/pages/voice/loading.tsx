@@ -6,7 +6,7 @@ import LoadingLottie from '../../assets/lottie/LoadingLottie.json';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = '/api';
 
 const Container = styled.div`
   display: flex;
