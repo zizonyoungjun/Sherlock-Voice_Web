@@ -44,13 +44,32 @@ const Loading = () => {
   const [status, setStatus] = useState('processing');
 
   useEffect(() => {
-    const task_id = localStorage.getItem('task_id');
-    if (!task_id) {
-      console.error('No task_id found in localStorage');
+    const formData = JSON.parse(localStorage.getItem('fileToUpload') || '{}');
+    if (!formData) {
+      console.error('No file to upload found in localStorage');
       return;
     }
 
-    const checkStatus = async () => {
+    const uploadFile = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/upload/`, {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        if (data.task_id) {
+          localStorage.removeItem('fileToUpload');
+          localStorage.setItem('task_id', data.task_id);
+          checkStatus(data.task_id);
+        } else {
+          console.error('Failed to get task_id from response');
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+      }
+    };
+
+    const checkStatus = async (task_id: string) => {
       try {
         const response = await fetch(`${API_BASE_URL}/waiting/${task_id}`, {
           method: 'GET',
@@ -62,15 +81,15 @@ const Loading = () => {
         if (data.status === 'ready') {
           navigate(`/voiceResult/${task_id}`);
         } else {
-          setTimeout(checkStatus, 2000);
+          setTimeout(() => checkStatus(task_id), 2000);
         }
       } catch (error) {
         console.error('Error checking status:', error);
-        setTimeout(checkStatus, 2000);
+        setTimeout(() => checkStatus(task_id), 2000);
       }
     };
 
-    checkStatus();
+    uploadFile();
   }, [navigate]);
 
   return (

@@ -88,7 +88,6 @@ const Upload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [fileUploaded, setFileUploaded] = useState(false);
   const navigate = useNavigate();
-  console.log('API_BASE_URL:', API_BASE_URL); // 콘솔 로그 추가
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -103,28 +102,8 @@ const Upload: React.FC = () => {
     if (fileUploaded && file) {
       const formData = new FormData();
       formData.append('file', file);
-
-      console.log('API_BASE_URL:', API_BASE_URL); // 콘솔 로그 추가
-
-      fetch(`${API_BASE_URL}/upload/`, {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => {
-        console.log('Response status:', response.status); // 응답 상태 로그 추가
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('File uploaded successfully');
-        localStorage.setItem('task_id', data.task_id); // task_id를 localStorage에 저장
-        navigate('/loading');
-      })
-      .catch(error => {
-        console.error('Upload error:', error);
-      });
+      localStorage.setItem('fileToUpload', JSON.stringify(formData));
+      navigate('/loading');
     } else {
       fileInputRef.current?.click();
     }
