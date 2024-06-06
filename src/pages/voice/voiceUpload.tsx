@@ -98,12 +98,27 @@ const Upload: React.FC = () => {
     }
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (fileUploaded && file) {
       const formData = new FormData();
       formData.append('file', file);
-      localStorage.setItem('fileToUpload', JSON.stringify(formData));
-      navigate('/loading');
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/upload/`, {
+          method: 'POST',
+          body: formData,
+        });
+        console.log('Response status:', response.status); // 응답 상태 로그 추가
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('File uploaded successfully');
+        localStorage.setItem('task_id', data.task_id); // task_id를 localStorage에 저장
+        navigate('/loading');
+      } catch (error) {
+        console.error('Upload error:', error);
+      }
     } else {
       fileInputRef.current?.click();
     }
