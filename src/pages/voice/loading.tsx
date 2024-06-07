@@ -37,6 +37,7 @@ const LoadingText = styled.div`
   font-size: 24px;
   color: #333;
   line-height: 36px;
+  white-space: pre-wrap;
 `;
 
 const Loading = () => {
