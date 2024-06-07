@@ -9,11 +9,8 @@ import IconDanger from '/public/assets/images/icons/iconDanger.png';
 import Manual from './manual';
 import PhishingCategory from './phishingCategory';
 
-// Environment variable
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Log the API base URL to ensure it's correct
-console.log('API_BASE_URL:', API_BASE_URL);
 
 interface CircleProps {
   score: number;
@@ -159,7 +156,7 @@ const KeywordList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 9px;
+  gap: 4px;
 `;
 
 const fadeIn = keyframes`
