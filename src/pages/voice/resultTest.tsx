@@ -125,7 +125,7 @@ interface CircleProps {
   
   const AlertMessage = styled.p<{ color: string }>`
     color: ${props => props.color};
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     margin: 6px;
     margin-top: 0px;
     font-weight: bold;
@@ -226,13 +226,7 @@ const AnimatedCircle = styled(Circle)<CircleProps>`
 const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   const { taskId } = useParams<{ taskId: string }>();
   const numericTaskId = parseInt(taskId ?? '0', 10);
-  const [keywords, setKeywords] = useState<string[]>(["대출",
-  "기존",
-  "정부",
-  "부탁",
-  "내역",
-  "신청",
-  "대환"]);
+  const [keywords, setKeywords] = useState<string[]>([]);
   const [displayedScore, setDisplayedScore] = useState<number>(0);
 
   useEffect(() => {
@@ -274,7 +268,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   let iconPath;
 
   if (score < 40) {
-    alertMessage = `보이스피싱 위험도가 낮습니다.\n그러나 항상 주의하세요.`;
+    alertMessage = `일반적인 통화녹음으로 판정 되었습니다✅\n아래 메뉴얼을 읽어보시고\n보이스피싱을 예방해주세요🧑‍✈️`;
     iconPath = IconOkay;
   } else if (score <= 70) {
     alertMessage = `보이스피싱 위험도가 중간입니다.\n관련 지식을 업데이트 하고 주의하세요.`;
@@ -301,20 +295,8 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
             <GaugeImage href={iconPath} iconPath={iconPath} />
           </Gauge>
           <AlertMessage color={messageColor}>{alertMessage}</AlertMessage>
-          {keywords.length > 0 && (
-            <KeywordListContainer>
-              <KeywordTitle>🚨 감지된 위험 키워드 🚨</KeywordTitle>
-              <KeywordList>
-                {keywords.map((keyword: string, index: number) => (
-                  <KeywordItem key={index} index={index}>{keyword}</KeywordItem>
-                ))}
-              </KeywordList>
-            </KeywordListContainer>
-          )}
         </InnerContainer>
       </ResultContainer>
-      <PhishingCategory keywords={keywords} />
-      <Manual/>
       <Footer />
     </Container>
   );
@@ -323,7 +305,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
 const ResultTest: React.FC = () => {
   return (
     <div>
-      <CreditScore score={83} />
+      <CreditScore score={32} />
     </div>
   );
 };
