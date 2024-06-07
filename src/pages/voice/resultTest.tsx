@@ -9,185 +9,185 @@ import IconDanger from '/public/assets/images/icons/iconDanger.png';
 import Manual from './manual';
 import PhishingCategory from './phishingCategory';
 
-
 interface CircleProps {
-  score: number;
-}
-
-interface GaugeImageProps extends React.SVGProps<SVGImageElement> {
-  iconPath: string; // 커스텀 프로퍼티 추가
-}
-
-interface CreditScoreProps {
-  score: number;
-}
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
-  min-height: 90vh;
-  padding: 14.4px;
-  padding-top: 0px;
-  padding-bottom: 135px;
-`;
-
-const InnerContainer = styled.div`
-  border: 3px solid #fff;
-  border-radius: 16px;
-  padding: 16px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ScoreTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  padding: 0px 36px;
-  border-radius: 9px;
-  margin-top: 18px;
-  margin-bottom: 27px;
-  text-align: center;
-`;
-
-const DescriptionText = styled.span`
-  color: #333;
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin-bottom: 9px;
-  font-size: 21.6px;
-`;
-
-const ScoreText = styled.div`
-  font-size: 2.25rem;
-  font-weight: bolder;
-  background-color: white;
-  padding: 18px 36px;
-  border-radius: 45%;
-  color: #10439F;
-  font-weight: 800;
-`;
-
-const Gauge = styled.svg`
-  width: 90%;
-  height: auto;
-  transform: rotate(-90deg);
-  position: relative;
-`;
-
-const GaugeImage = styled.image.attrs<GaugeImageProps>(props => ({
-  width: props.iconPath === IconDanger ? '16.2px' : '18px',
-  x: props.iconPath === IconDanger ? '33.9' : '33.1',
-  y: props.iconPath === IconDanger ? '33.9' : '33.1'
-}))`
-  height: auto;
-  transform: translate(-50%, -50%);
-`;
-
-const CircleBg = styled.circle.attrs(() => ({
-  cx: "18",
-  cy: "18",
-  r: "16"
-}))`
-  fill: none;
-  stroke: #eee;
-  stroke-width: 9px;
-`;
-
-const Circle = styled.circle.attrs<CircleProps>(props => ({
-  cx: "18",
-  cy: "18",
-  r: "16"
-}))<CircleProps>`
-  fill: none;
-  stroke: #6200ea;
-  stroke-width: 9px;
-`;
-
-const ResultContainer = styled.div`
-  background-color: #FFF6D5;
-  border-radius: 18px;
-  box-shadow: 0 3.6px 7.2px rgba(0, 0, 0, 0.1);
-  padding: 27px;
-  text-align: center;
-  max-width: 405px;
-  width: 100%;
-  margin: 18px auto;
-  margin-top: 90px;
-`;
-
-const AlertMessage = styled.p<{ color: string }>`
-  color: ${props => props.color};
-  font-size: 1.8rem;
-  margin: 9px;
-  margin-top: 0px;
-  font-weight: bold;
-  white-space: pre-wrap;
-  line-height: 25.2px;
-`;
-
-const KeywordListContainer = styled.div`
-  background-color: #fff;
-  border-radius: 9px;
-  box-shadow: 0 1.8px 3.6px rgba(0, 0, 0, 0.1);
-  padding: 18px;
-  margin-top: 18px;
-`;
-
-const KeywordTitle = styled.h3`
-  color: #333;
-  margin-bottom: 9px;
-  font-size: 1.35rem;
-`;
-
-const KeywordList = styled.ul`
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 9px;
-`;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
+    score: number;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  
+  interface GaugeImageProps extends React.SVGProps<SVGImageElement> {
+    iconPath: string;
   }
-`;
-
-const KeywordItem = styled.li<{ index: number }>`
-  background-color: #4B0082;
-  color: white;
-  padding: 9px 13.5px;
-  margin: 4.5px;
-  border-radius: 18px;
-  font-size: 14.4px;
-  font-weight: 500;
-  border: 1.8px solid #4B0082;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  opacity: 0;
-  animation: ${fadeIn} 1s ease forwards;
-  animation-delay: ${props => 1.35 + props.index * 0.45}s;
-
-  &:hover {
+  
+  interface CreditScoreProps {
+    score: number;
+  }
+  
+  const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    min-height: 90vh;
+    padding: 14.4px;
+    padding-top: 0px;
+    padding-bottom: 135px;
+    margin: 0 auto;
+  `;
+  
+  const InnerContainer = styled.div`
+    border: 3px solid #fff;
+    border-radius: 16px;
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `;
+  
+  const ScoreTextContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 0px 36px;
+    border-radius: 9px;
+    margin-top: 18px;
+    margin-bottom: 27px;
+    text-align: center;
+  `;
+  
+  const DescriptionText = styled.span`
+    color: #333;
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 9px;
+    font-size: 21.6px;
+  `;
+  
+  const ScoreText = styled.div`
+    font-size: 2.25rem;
+    font-weight: bolder;
     background-color: white;
-    color: #4B0082;
-    border-color: #4B0082;
-  }
-`;
+    padding: 18px 36px;
+    border-radius: 45%;
+    color: #10439F;
+    font-weight: 800;
+  `;
+  
+  const Gauge = styled.svg`
+    width: 90%;
+    height: auto;
+    transform: rotate(-90deg);
+    position: relative;
+  `;
+  
+  const GaugeImage = styled.image.attrs<GaugeImageProps>(props => ({
+    width: props.iconPath === IconDanger ? '16.2px' : '18px',
+    x: props.iconPath === IconDanger ? '33.9' : '33.1',
+    y: props.iconPath === IconDanger ? '33.9' : '33.1'
+  }))`
+    height: auto;
+    transform: translate(-50%, -50%);
+  `;
+  
+  const CircleBg = styled.circle.attrs(() => ({
+    cx: "18",
+    cy: "18",
+    r: "16"
+  }))`
+    fill: none;
+    stroke: #eee;
+    stroke-width: 9px;
+  `;
+  
+  const Circle = styled.circle.attrs<CircleProps>(props => ({
+    cx: "18",
+    cy: "18",
+    r: "16"
+  }))<CircleProps>`
+    fill: none;
+    stroke: #6200ea;
+    stroke-width: 9px;
+  `;
+  
+  const ResultContainer = styled.div`
+    background-color: #FFF6D5;
+    border-radius: 18px;
+    box-shadow: 0 3.6px 7.2px rgba(0, 0, 0, 0.1);
+    padding: 27px;
+    text-align: center;
+    max-width: 405px;
+    width: 100%;
+    margin: 18px auto;
+    margin-top: 90px;
+  `;
+  
+  const AlertMessage = styled.p<{ color: string }>`
+    color: ${props => props.color};
+    font-size: 1.8rem;
+    margin: 6px;
+    margin-top: 0px;
+    font-weight: bold;
+    white-space: pre-wrap;
+    line-height: 25.2px;
+  `;
+  
+  const KeywordListContainer = styled.div`
+    background-color: #fff;
+    border-radius: 9px;
+    box-shadow: 0 1.8px 3.6px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    margin-top: 18px;
+  `;
+  
+  const KeywordTitle = styled.h3`
+    color: #333;
+    margin-bottom: 9px;
+    font-size: 1.35rem;
+  `;
+  
+  const KeywordList = styled.ul`
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+  `;
+  
+  const fadeIn = keyframes`
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  `;
+  
+  const KeywordItem = styled.li<{ index: number }>`
+    background-color: #4B0082;
+    color: white;
+    padding: 9px 13.5px;
+    margin: 4.5px;
+    border-radius: 18px;
+    font-size: 14.4px;
+    font-weight: 500;
+    border: 1.8px solid #4B0082;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: ${fadeIn} 1s ease forwards;
+    animation-delay: ${props => 1.35 + props.index * 0.45}s;
+  
+    &:hover {
+      background-color: white;
+      color: #4B0082;
+      border-color: #4B0082;
+    }
+  `;
 
 const percentage = (score: number, maxScore: number): number => (score / maxScore) * 100;
 
@@ -226,7 +226,13 @@ const AnimatedCircle = styled(Circle)<CircleProps>`
 const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
   const { taskId } = useParams<{ taskId: string }>();
   const numericTaskId = parseInt(taskId ?? '0', 10);
-  const [keywords, setKeywords] = useState<string[]>(['검찰청', '계좌', '만나서']);
+  const [keywords, setKeywords] = useState<string[]>(["대출",
+  "기존",
+  "정부",
+  "부탁",
+  "내역",
+  "신청",
+  "대환"]);
   const [displayedScore, setDisplayedScore] = useState<number>(0);
 
   useEffect(() => {
