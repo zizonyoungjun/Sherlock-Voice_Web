@@ -68,7 +68,7 @@ const BottomText = styled.p`
   text-align: center;
   line-height: 1.5;
   margin: 0 20px;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
   font-size: 30px;
 `;
 
