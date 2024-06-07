@@ -47,8 +47,8 @@ const LoadingTest = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/resultTest');
-    }, 10000); // 10초 후에 /resultTest로 이동
+      navigate('/fakeVoice');
+    }, 5000); // 10초 후에 /resultTest로 이동
 
     return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머를 정리
   }, [navigate]);
