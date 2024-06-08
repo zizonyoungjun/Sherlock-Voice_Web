@@ -297,6 +297,7 @@ const CreditScore: React.FC<CreditScoreProps> = ({ score }) => {
           <AlertMessage color={messageColor}>{alertMessage}</AlertMessage>
         </InnerContainer>
       </ResultContainer>
+      <Manual/>
       <Footer />
     </Container>
   );
