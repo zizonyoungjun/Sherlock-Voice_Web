@@ -8,13 +8,10 @@
     "dotenv": "^16.4.5",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
-    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.14.2",
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1",
     "styled-components": "^6.0.5",
     "vite-plugin-svgr": "^3.2.0"
   },
