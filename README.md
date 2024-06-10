@@ -3,10 +3,12 @@
 ## 💻 기술 스택
 
 ```
-  "dependencies": {
+ "dependencies": {
     "axios": "^1.6.5",
+    "dotenv": "^16.4.5",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-query": "^3.39.3",
@@ -27,8 +29,8 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "typescript": "^5.2.2",
-    "vite": "^5.1.6"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   }
 ```
 
@@ -43,13 +45,13 @@
 │  │   └── 📁 images
 │  ├── 📁 components
 │  │   ├── Header.tsx
+│  │   ├── Footer.tsx
 │  │   ├── Layout.tsx
 │  │   └── Router.tsx
 │  ├── 📁 pages
-│  │   ├── 📁 main
+│  │   ├── 📁 landing
 │  │   ├── 📁 voice
-│  │   ├── 📁 survey
-│  │   ├── 📁 info
+│  │   └── 📁 survey
 │  ├── 📁 utils
 │  │   ├── 📁 hooks
 │  ├── 📁 styles
@@ -62,6 +64,7 @@
 ├── .eslintrc.cjs
 ├── .gitgnore
 ├── index.html
+├── netlify.toml
 ├── package.json
 ├── README.md
 ├── tsconfjg.json
